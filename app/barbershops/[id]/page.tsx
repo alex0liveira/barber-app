@@ -10,40 +10,46 @@ interface BarbershopDetailsPageProps {
   };
 }
 
-const BarbershopDetailsPage = async ({params}: BarbershopDetailsPageProps) => {
-
+const BarbershopDetailsPage = async ({
+  params,
+}: BarbershopDetailsPageProps) => {
   const session = await getServerSession(authOptions);
-  
-  if (!params.id){
+
+  if (!params.id) {
     // TODO redirecionar para homepage
-    return null
+    return null;
   }
-  
+
   const barbershop = await db.barbershop.findUnique({
     where: {
       id: params.id,
     },
     include: {
       services: true,
-    }
-});
+    },
+  });
 
-if (!barbershop){
-  // TODO redirecionar para homepage
-  return null
-}
-  
+  if (!barbershop) {
+    // TODO redirecionar para homepage
+    return null;
+  }
+
   return (
     <div>
-    <BarbershopInfo barbershop={barbershop}/>
+      <BarbershopInfo barbershop={barbershop} />
 
-    <div className="px-5 flex flex-col gap-4 py-6">
-      {barbershop.services.map(service => (
-        <ServiceItem key={service.id} service={service} isAuthenticated={!!session?.user}/>
-      ))}
-    </div>
+      <div className="px-5 flex flex-col gap-4 py-6">
+        {barbershop.services.map((service) => (
+          <ServiceItem
+            barbershop={barbershop}
+            key={service.id}
+            service={service}
+            isAuthenticated={!!session?.user}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default BarbershopDetailsPage;
