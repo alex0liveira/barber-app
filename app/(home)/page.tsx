@@ -8,31 +8,32 @@ import BarbershopItem from "./_components/barbershop-item";
 import Footer from "../_components/footer";
 
 export default async function Home() {
-
   const barbershops = await db.barbershop.findMany({});
 
   return (
     <div>
-      <Header/>
+      <Header />
 
       <div className="px-5 pt-5">
         <h2 className="text-xl font-bold">Olá, Miguel!</h2>
         <p className="capitalize text-sm">
-        {format(new Date, "EEEE', ' dd 'de' MMMM", {locale: ptBR, })}
+          {format(new Date(), "EEEE', ' dd 'de' MMMM", { locale: ptBR })}
         </p>
       </div>
 
       <div className="px-5 mt-6">
-        <Search/>
+        <Search />
       </div>
 
-      <div className="px-5 mt-6">
+      {/* <div className="px-5 mt-6">
         <h2 className="text-xs uppercase mb-3 font-bold text-gray-400">Agendamentos</h2>
         <BookingItem/>
-      </div>
+      </div> */}
 
       <div className="mt-6">
-        <h2 className="text-xs px-5 uppercase mb-3 font-bold text-gray-400">Recomendados</h2>
+        <h2 className="text-xs px-5 uppercase mb-3 font-bold text-gray-400">
+          Recomendados
+        </h2>
         <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
@@ -41,14 +42,15 @@ export default async function Home() {
       </div>
 
       <div className="mt-6 mb-[4.5rem]">
-        <h2 className="text-xs px-5 uppercase mb-3 font-bold text-gray-400">Populares</h2>
+        <h2 className="text-xs px-5 uppercase mb-3 font-bold text-gray-400">
+          Populares
+        </h2>
         <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
       </div>
-
     </div>
   );
 }
